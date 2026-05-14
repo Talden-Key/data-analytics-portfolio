@@ -18,3 +18,12 @@ FROM order_items oi
 JOIN orders o ON oi.order_id = o.order_id
 GROUP BY 1
 ORDER BY 1;
+
+-- Revenue by Category / Product
+SELECT
+    product_id,
+    SUM(price) AS revenue
+FROM order_items
+GROUP BY product_id
+ORDER BY revenue DESC
+LIMIT 10;
