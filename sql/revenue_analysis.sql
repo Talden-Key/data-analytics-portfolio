@@ -56,3 +56,13 @@ FROM
         GROUP BY
             order_id
     );
+
+-- Revenue per Customer
+SELECT
+    o.customer_id,
+    SUM(oi.price) AS total_spent
+FROM orders o
+JOIN order_items oi ON o.order_id = oi.order_id
+GROUP BY o.customer_id
+ORDER BY total_spent DESC
+LIMIT 10;
