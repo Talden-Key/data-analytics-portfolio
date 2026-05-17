@@ -35,13 +35,14 @@ SELECT
     product_id,
     SUM(price) AS revenue
 FROM
-    order_items
+    olist_order_items_dataset 
 GROUP BY
     product_id
 ORDER BY
     revenue DESC
 LIMIT
     10;
+
 
 -- Average Order Value 
 SELECT
