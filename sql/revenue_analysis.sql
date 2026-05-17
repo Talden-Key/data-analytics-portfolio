@@ -62,8 +62,8 @@ FROM
 SELECT
     o.customer_id,
     SUM(oi.price) AS total_spent
-FROM orders o
-JOIN order_items oi ON o.order_id = oi.order_id
+FROM olist_orders_dataset o
+JOIN olist_order_items_dataset  oi ON o.order_id = oi.order_id
 GROUP BY o.customer_id
 ORDER BY total_spent DESC
 LIMIT 10;
