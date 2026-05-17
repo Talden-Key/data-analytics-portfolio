@@ -53,7 +53,7 @@ FROM
             order_id,
             SUM(price) AS order_total
         FROM
-            order_items
+            olist_order_items_dataset
         GROUP BY
             order_id
     );
