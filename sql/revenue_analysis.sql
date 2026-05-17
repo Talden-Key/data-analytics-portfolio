@@ -12,19 +12,19 @@ ORDER BY
 
 -- Revenue Growth
 SELECT
-    DATE_TRUNC ('month', o.order_purchase_timestamp) AS month,
+    DATE_TRUNC ('month', o.order_purchase_timestamp::timestamp ) AS month,
     SUM(oi.price) AS revenue,
     LAG (SUM(oi.price)) OVER (
         ORDER BY
-            DATE_TRUNC ('month', o.order_purchase_timestamp)
+            DATE_TRUNC ('month', o.order_purchase_timestamp::timestamp)
     ) AS prev_month,
     SUM(oi.price) - LAG (SUM(oi.price)) OVER (
         ORDER BY
-            DATE_TRUNC ('month', o.order_purchase_timestamp)
+            DATE_TRUNC ('month', o.order_purchase_timestamp::timestamp)
     ) AS growth
 FROM
-    order_items oi
-    JOIN orders o ON oi.order_id = o.order_id
+    olist_order_items_dataset  oi
+    JOIN olist_orders_dataset  o ON oi.order_id = o.order_id
 GROUP BY
     1
 ORDER BY
