@@ -67,3 +67,22 @@ JOIN olist_order_items_dataset  oi ON o.order_id = oi.order_id
 GROUP BY o.customer_id
 ORDER BY total_spent DESC
 LIMIT 10;
+
+-- Repeat vs New Customer Revenue
+WITH customer_orders AS ( 
+    SELECT 
+        customer_id,
+        order_id,
+        order_purchase_timestamp,
+        ROW_NUMBER() OVER (PARTITION BY customer_id ORDER BY order_purchase_timestamp) AS order_number
+    FROM olist_orders_dataset
+)
+SELECT 
+    CASE
+        WHEN order_number = 1 THEN 'new'
+        ELSE 'repeat'
+    END AS customer_type,
+    SUM()
+FROM customer_orders co
+JOIN olist_order_items_dataset oi ON co.order_id = oi.order_id
+GROUP BY 1;
