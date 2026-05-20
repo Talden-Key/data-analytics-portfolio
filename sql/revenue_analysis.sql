@@ -86,3 +86,12 @@ SELECT
 FROM customer_orders co
 JOIN olist_order_items_dataset oi ON co.order_id = oi.order_id
 GROUP BY 1;
+
+-- Revenue by day of week
+SELECT
+    TO_CHAR(o.order_purchase_timestamp::timestamp, 'Day') AS day,
+    SUM(oi.price) AS revenue
+FROM olist_orders_dataset  o
+JOIN olist_order_items_dataset  oi ON o.order_id = oi.order_id
+GROUP BY 1
+ORDER BY revenue DESC;
