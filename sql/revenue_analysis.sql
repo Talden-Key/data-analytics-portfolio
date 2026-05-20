@@ -82,7 +82,7 @@ SELECT
         WHEN order_number = 1 THEN 'new'
         ELSE 'repeat'
     END AS customer_type,
-    SUM()
+    SUM(oi.price) as revenue
 FROM customer_orders co
 JOIN olist_order_items_dataset oi ON co.order_id = oi.order_id
 GROUP BY 1;
