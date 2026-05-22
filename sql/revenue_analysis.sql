@@ -95,3 +95,12 @@ FROM olist_orders_dataset  o
 JOIN olist_order_items_dataset  oi ON o.order_id = oi.order_id
 GROUP BY 1
 ORDER BY revenue DESC;
+
+-- Revenue Distribution
+SELECT
+    product_id,
+    SUM(price) AS revenue
+FROM olist_order_items_dataset 
+GROUP BY product_id
+ORDER BY revenue DESC;
+
