@@ -12,3 +12,10 @@ SELECT
     ) AS avg_delivery_days
 FROM orders o
 WHERE o.order_status = 'delivered';
+
+-- Late Delivery
+SELECT
+    COUNT(*) AS late_orders
+FROM orders
+WHERE order_delivered_customer_date::timestamp
+    > order_estimated_delivery_date::timestamp;
