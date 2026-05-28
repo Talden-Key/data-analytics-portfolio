@@ -104,3 +104,12 @@ FROM olist_order_items_dataset
 GROUP BY product_id
 ORDER BY revenue DESC;
 
+-- Order Per State
+SELECT
+    c.customer_state,
+    COUNT(DISTINCT o.order_id) AS total_orders
+FROM customers c
+JOIN orders o
+    ON c.customer_id = o.customer_id
+GROUP BY 1
+ORDER BY total_orders DESC;
