@@ -113,3 +113,11 @@ JOIN orders o
     ON c.customer_id = o.customer_id
 GROUP BY 1
 ORDER BY total_orders DESC;
+
+-- Payment Type Distribution
+SELECT
+    payment_type,
+    COUNT(*) AS total_payments
+FROM order_payments
+GROUP BY 1
+ORDER BY total_payments DESC;
