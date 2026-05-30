@@ -121,3 +121,14 @@ SELECT
 FROM order_payments
 GROUP BY 1
 ORDER BY total_payments DESC;
+
+-- Customers with Repeat Purchase
+SELECT
+    c.customer_unique_id,
+    COUNT(DISTINCT o.order_id) AS total_orders
+FROM customers c
+JOIN orders o
+    ON c.customer_id = o.customer_id
+GROUP BY 1
+HAVING COUNT(DISTINCT o.order_id) > 1
+ORDER BY total_orders DESC;
