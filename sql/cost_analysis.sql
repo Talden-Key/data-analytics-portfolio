@@ -7,3 +7,19 @@ JOIN products p
     ON oi.product_id = p.product_id
 GROUP BY 1
 ORDER BY avg_shipping DESC;
+
+-- Monthly Freight Cost Trend
+SELECT
+    DATE_TRUNC(
+        'month',
+        o.order_purchase_timestamp::timestamp
+    ) AS month,
+
+    ROUND(SUM(oi.freight_value), 2) AS freight_cost
+
+FROM orders o
+JOIN order_items oi
+    ON o.order_id = oi.order_id
+
+GROUP BY 1
+ORDER BY 1;
