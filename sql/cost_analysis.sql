@@ -23,3 +23,13 @@ JOIN order_items oi
 
 GROUP BY 1
 ORDER BY 1;
+
+-- Freight Cost as % of Revenue
+SELECT
+    ROUND(
+        100.0 *
+        SUM(freight_value)
+        / SUM(price),
+        2
+    ) AS freight_percent_of_sales
+FROM order_items;
