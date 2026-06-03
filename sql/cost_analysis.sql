@@ -33,3 +33,19 @@ SELECT
         2
     ) AS freight_percent_of_sales
 FROM order_items;
+
+-- Product Categories with Highest Shipping Cost
+SELECT
+    p.product_category_name,
+    ROUND(
+        AVG(oi.freight_value),
+        2
+    ) AS avg_shipping_cost
+
+FROM order_items oi
+JOIN products payment_type
+    ON oi.product_id = p.product_id
+
+GROUP BY 1
+ORDER BY avg_shipping_cost DESC 
+LIMIT 10;
