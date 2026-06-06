@@ -61,3 +61,24 @@ JOIN products p
     ON oi.product_id = p.product_id
 GROUP BY 1
 ORDER BY shipping_percent DESC;
+
+-- States With Highest Delivery Cost
+SELECT
+    p.product_category_name,
+
+    ROUND(AVG(oi.price), 2) AS avg_price,
+
+    ROUND(AVG(oi.freight_value), 2) AS avg_shipping,
+
+    ROUND(
+        AVG(oi.freight_value)
+        / AVG(oi.price) * 100,
+        2
+    ) AS shipping_percent
+
+FROM order_items oi
+JOIN products p
+    ON oi.product_id = p.product_id
+
+GROUP BY 1
+ORDER BY shipping_percent DESC;
