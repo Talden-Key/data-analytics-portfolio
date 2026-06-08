@@ -82,3 +82,18 @@ JOIN products p
 
 GROUP BY 1
 ORDER BY shipping_percent DESC;
+
+-- Sellet Shipping Cost Analysis
+SELECT 
+    seller_id,
+
+    ROUND(
+        AVG(freight_value),
+        2
+    ) AS avg_shipping_cost
+
+FROM order_items
+
+GROUP BY 1
+ORDER BY avg_shipping_cost DESC
+LIMIT 20;
