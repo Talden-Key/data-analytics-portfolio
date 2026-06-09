@@ -97,3 +97,23 @@ FROM order_items
 GROUP BY 1
 ORDER BY avg_shipping_cost DESC
 LIMIT 20;
+
+--Delivery Delay Cost Analysis
+SELECT
+    CASE
+        WHEN order_delivered_customer_date::timestamp
+             > order_estimated_delivery_date::timestamp
+        THEN 'Late'
+        ELSE 'On Time'
+    END AS delivery_status,
+
+    ROUND(
+        AVG(oi.freight_value),
+        2
+    ) AS avg_shipping_cost
+
+FROM orders o
+JOIN order_items oi
+    ON o.order_id = oi.order_id
+
+GROUP BY 1;
