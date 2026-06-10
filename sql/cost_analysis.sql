@@ -117,3 +117,14 @@ JOIN order_items oi
     ON o.order_id = oi.order_id
 
 GROUP BY 1;
+
+-- Revenue vs Freight by Category
+SELECT 
+    p.product_category_name,
+    ROUND(SUM(oi.price), 2) AS revenue,
+    ROUND(SUM(oi.freight_value),2 ) AS avg_shipping_cost
+FROM order_items oi
+JOIN products payment_type
+    ON oi.product_id = p.product_id
+GROUP BY 1
+ORDER BY revenue DESC;
