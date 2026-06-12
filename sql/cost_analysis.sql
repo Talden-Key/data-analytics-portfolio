@@ -155,3 +155,13 @@ SELECT
 FROM order_items
 
 GROUP BY 1;
+
+-- Estimated Gross Margin Analysis
+SELECT 
+    order_id,
+    ROUND(SUM(price), 2) AS revenue,
+    ROUND(SUM(price) * 0.70, 2) AS estimated_product_cost,
+    ROUND(SUM(freight_value), 2) AS shipping_cost,
+    ROUND(SUM(price) - (SUM(price)*0.70)-(SUM(freight_value),2) AS estimated_profit)
+FROM order_items
+GROUP BY 1;
