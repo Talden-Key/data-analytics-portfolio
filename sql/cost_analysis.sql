@@ -165,3 +165,17 @@ SELECT
     ROUND(SUM(price) - (SUM(price)*0.70)-(SUM(freight_value),2) AS estimated_profit)
 FROM order_items
 GROUP BY 1;
+
+-- Cost Per Order
+SELECT
+    ROUND(
+        AVG(order_shipping_cost),
+        2
+    ) AS avg_shipping_per_order
+FROM (
+    SELECT
+        order_id,
+        SUM(freight_value) AS order_shipping_cost
+    FROM order_items
+    GROUP BY order_id
+) t;
