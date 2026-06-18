@@ -179,3 +179,17 @@ FROM (
     FROM order_items
     GROUP BY order_id
 ) t;
+
+-- Freight Cost Distribution
+SELECT
+    CASE 
+        WHEN freight_value < 10 THEN 'Low'
+        WHEN freight_value < 30 THEN 'Medium'
+        ELSE 'High'
+    END AS cost_bucket,
+
+    COUNT(*) AS total_orders
+
+FROM order_items
+GROUP BY 1
+ORDER BY total_orders DESC;
