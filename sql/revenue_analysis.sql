@@ -132,3 +132,11 @@ JOIN orders o
 GROUP BY 1
 HAVING COUNT(DISTINCT o.order_id) > 1
 ORDER BY total_orders DESC;
+
+-- Order Status Funnel
+SELECT
+    order_status,
+    COUNT(*) AS total_orders
+FROM orders
+GROUP BY order_status
+ORDER BY total_orders DESC;
