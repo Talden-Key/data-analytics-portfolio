@@ -140,3 +140,10 @@ SELECT
 FROM orders
 GROUP BY order_status
 ORDER BY total_orders DESC;
+
+-- Cancellation Rate
+SELECT
+    ROUND(
+        100.0 * SUM(CASE WHEN order_status = 'canceled' THEN 1 ELSE 0 END) / COUNT(*), 2 )
+        AS Cancellation_rate
+FROM orders;
