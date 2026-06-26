@@ -147,3 +147,10 @@ SELECT
         100.0 * SUM(CASE WHEN order_status = 'canceled' THEN 1 ELSE 0 END) / COUNT(*), 2 )
         AS Cancellation_rate
 FROM orders;
+
+-- Revenue Lost From Cancellations
+SELECT 
+    ROUND ( SUM(oi.price), 2) AS canceled_revenue
+FROM orders o
+    ON o.order_id = oi.order_id;
+WHERE order_status = 'canceled';
