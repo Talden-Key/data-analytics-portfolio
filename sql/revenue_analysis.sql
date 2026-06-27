@@ -154,3 +154,13 @@ SELECT
 FROM orders o
     ON o.order_id = oi.order_id;
 WHERE order_status = 'canceled';
+
+-- Revenue by Order Status
+SELECT
+    order_status,
+    ROUND(SUM(price), 2) AS revenue
+FROM orders o
+JOIN order_items oi
+    ON o.order_id = oi.order_id
+GROUP BY 1
+ORDER BY revenue DESC;
