@@ -164,3 +164,14 @@ JOIN order_items oi
     ON o.order_id = oi.order_id
 GROUP BY 1
 ORDER BY revenue DESC;
+
+-- Funnel by Customer State
+SELECT 
+    c.customer_state,
+    o.order_status,
+    COUNT(*) AS total_orders
+FROM customers c
+JOIN orders o
+    ON c.customer_id = 0.customer_id
+GROUP BY 1, 2
+ORDER BY 1;
