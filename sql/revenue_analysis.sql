@@ -175,3 +175,17 @@ JOIN orders o
     ON c.customer_id = 0.customer_id
 GROUP BY 1, 2
 ORDER BY 1;
+
+-- Funnel by Product Category
+SELECT
+    p.product_category_name,
+    o.order_status,
+    COUNT(*) AS total_orders
+FROM orders o
+JOIN order_items oi
+    ON o.order_id = oi.order_id
+JOIN products p
+    ON oi.product_id = p.product_id
+
+GROUP BY 1, 2
+ORDER BY 1;
