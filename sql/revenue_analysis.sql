@@ -189,3 +189,12 @@ JOIN products p
 
 GROUP BY 1, 2
 ORDER BY 1;
+
+-- Average Review Score by Funnel Outcome
+SELECT 
+    o.order_status,
+    ROUND(AVG(r.review_score), 2) AS avg_review
+FROM orders o
+JOIN order_reviews r
+    ON o.order_id = r.order_id
+GROUP BY 1;
