@@ -198,3 +198,14 @@ FROM orders o
 JOIN order_reviews r
     ON o.order_id = r.order_id
 GROUP BY 1;
+
+--Seller Funnel Analysis
+SELECT
+    oi.seller_id,
+    o.order_status,
+    COUNT(*) AS total_orders
+FROM orders o
+JOIN order_items oi
+    ON o.order_id = oi.order_id
+GROUP BY 1, 2
+ORDER BY 1;
