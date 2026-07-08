@@ -209,3 +209,22 @@ JOIN order_items oi
     ON o.order_id = oi.order_id
 GROUP BY 1, 2
 ORDER BY 1;
+
+--Customer Repeat Purchase Funnel
+SELECT
+    CASE
+        WHEN order_count = 1 THEN 'One-Time'
+        ELSE 'Repeat'
+    END AS customer_type,
+
+    COUNT(*) AS customers
+FROM (
+    SELECT
+        c.customer_unique_id,
+        COUNT(DISTINCT o.order_id) AS order_count
+    FROM customers c
+    JOIN orders o
+        ON c.customer_id = o.customer_id
+    GROUP BY 1
+) t
+GROUP BY 1;
