@@ -65,3 +65,19 @@ ON o.order_id = r.order_id
 WHERE order_status = 'delivered'
 GROUP BY 1;
 
+--Review Distribution
+SELECT
+    CASE
+        WHEN order_delivered_customer_date > order_estimated_delivery_date
+            THEN 'Late'
+        ELSE 'On Time'
+    END AS delivery_status,
+    review_score,
+    COUNT(*) AS total_reviews
+FROM orders o
+JOIN order_reviews r
+ON o.order_id = r.order_id
+WHERE order_status = 'delivered'
+GROUP BY 1,2
+ORDER BY 1,2;
+
