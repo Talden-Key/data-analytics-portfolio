@@ -81,3 +81,27 @@ WHERE order_status = 'delivered'
 GROUP BY 1,2
 ORDER BY 1,2;
 
+-- Delivery Delay Buckets
+SELECT
+    CASE
+        WHEN order_delivered_customer_date <= order_estimated_delivery_date
+            THEN 'On Time'
+        WHEN order_delivered_customer_date <= order_estimated_delivery_date + INTERVAL '3days'
+            THEN '1-3 Days Late'
+        WHEN order_delivered_customer_date <= order_estimated_delivery_date + INTERVAL '7days'
+            THEN '4-7 Days Late'
+        ELSE 'More Than 7 Days Late'
+    END AS delay_bucket,
+
+    ROUND(AVG(review_score), 2) AS avg_review,
+    COUNT(*) AS total_orders
+FROM orders o
+JOIN order_reviews r 
+ON o.order_id = r.order_id
+
+WHERE order_reviews r
+ON o.order_id = r.order_id
+
+WHERE order_status='delivered'
+
+ORDER BY 1;
