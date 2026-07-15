@@ -7,3 +7,13 @@ JOIN products p
     ON oi.product_id = p.product_id 
 GROUP BY p.product_category_name 
 ORDER BY total_items_sold DESC;
+
+--Average Selling Price
+SELECT 
+    p.product_category_name,
+    ROUND(AVG(oi.price),2) AS avg_price 
+FROM order_items oi 
+JOIN products p 
+    ON oi.product_id = p.product_id
+GROUP BY p.product_category_name
+ORDER BY avg_price DESC;
