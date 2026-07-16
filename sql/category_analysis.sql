@@ -27,3 +27,15 @@ JOIN products p
     ON oi.product_id = p.product_id
 GROUP BY p.prodcut_category_name
 ORDER BY avg_shipping_cost DESC;
+
+--Shipping Cost as a Percentage of Product Price
+SELECT
+    p.product_category_name,
+    ROUND(AVG(oi.price),2) AS avg_price,
+    ROUND(AVG(oi.freight_value),2) AS avg_shipping,
+    ROUND(AVG(oi.freight_value)/AVG(oi.price)*100,2) AS shipping_percent
+FROM order_items oi
+JOIN products p
+ON oi.product_id = p.product_id
+GROUP BY 1
+ORDER BY shipping_percent DESC; 
