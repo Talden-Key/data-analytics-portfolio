@@ -39,3 +39,27 @@ JOIN products p
 ON oi.product_id = p.product_id
 GROUP BY 1
 ORDER BY shipping_percent DESC; 
+
+--Customer Review by Category
+SELECT
+    p.product_category_name,
+
+    ROUND(
+        AVG(r.review_score),
+        2
+    ) AS avg_review
+
+FROM products p
+
+JOIN order_items oi
+ON p.product_id = oi.product_id
+
+JOIN orders o
+ON oi.order_id = o.order_id
+
+JOIN order_reviews r
+ON o.order_id = r.order_id
+
+GROUP BY 1
+
+ORDER BY avg_review DESC;
