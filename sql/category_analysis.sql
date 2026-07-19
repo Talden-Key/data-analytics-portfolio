@@ -63,3 +63,31 @@ ON o.order_id = r.order_id
 GROUP BY 1
 
 ORDER BY avg_review DESC;
+
+-- Cancellation Rate By Category
+SELECT
+    p.product_category_name,
+
+    ROUND(
+        100.0 *
+        SUM(
+            CASE
+                WHEN o.order_status='canceled'
+                THEN 1
+                ELSE 0
+            END
+        ) / COUNT(*),
+        2
+    ) AS cancellation_rate
+
+FROM products p
+
+JOIN order_items oi
+ON p.product_id=oi.product_id
+
+JOIN orders o
+ON oi.order_id=o.order_id
+
+GROUP BY 1
+
+ORDER BY cancellation_rate DESC;
