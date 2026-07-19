@@ -50,18 +50,13 @@ SELECT
     ) AS avg_review
 
 FROM products p
-
 JOIN order_items oi
 ON p.product_id = oi.product_id
-
 JOIN orders o
 ON oi.order_id = o.order_id
-
 JOIN order_reviews r
 ON o.order_id = r.order_id
-
 GROUP BY 1
-
 ORDER BY avg_review DESC;
 
 -- Cancellation Rate By Category
@@ -81,13 +76,33 @@ SELECT
     ) AS cancellation_rate
 
 FROM products p
-
 JOIN order_items oi
 ON p.product_id=oi.product_id
-
 JOIN orders o
 ON oi.order_id=o.order_id
-
 GROUP BY 1
-
 ORDER BY cancellation_rate DESC;
+
+-- Delivery Time by Category
+SELECT
+    p.product_category_name,
+
+    ROUND(
+        AVG(
+            DATE_PART(
+                'day',
+                o.order_delivered_customer_date::timestamp -
+                o.order_purchase_timestamp::timestamp
+            )
+        ),
+        2
+    ) AS avg_delivery_days
+
+FROM orders o
+JOIN order_items oi
+ON o.order_id=oi.order_id
+JOIN products p
+ON oi.product_id=p.product_id
+WHERE order_status='delivered'
+GROUP BY 1
+ORDER BY avg_delivery_days DESC;
