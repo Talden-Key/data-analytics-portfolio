@@ -106,3 +106,24 @@ ON oi.product_id=p.product_id
 WHERE order_status='delivered'
 GROUP BY 1
 ORDER BY avg_delivery_days DESC;
+
+--Estimated Profit by Category
+SELECT
+    p.product_category_name,
+    ROUND(SUM(oi.price),2) AS revenue,
+    ROUND(SUM(oi.freight_value),2) AS shipping,
+    ROUND(
+        SUM(oi.price) * 0.70,
+        2
+    ) AS estimated_product_cost,
+    ROUND(
+        SUM(oi.price)
+        - SUM(oi.price) * 0.70
+        - SUM(oi.freight_value),
+        2
+    ) AS estimated_profit
+FROM order_items oi
+JOIN products p
+ON oi.product_id=p.product_id
+GROUP BY 1
+ORDER BY estimated_profit DESC;
