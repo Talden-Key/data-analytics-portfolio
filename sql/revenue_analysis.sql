@@ -245,3 +245,14 @@ SELECT
 FROM order_items
 GROUP BY seller_id
 ORDER BY revenue DESC;
+
+--Average Order Value
+SELECT
+    ROUND(AVG(order_total),2) AS avg_order_value
+FROM (
+    SELECT
+        order_id,
+        SUM(price) AS order_total
+    FROM order_items
+    GROUP BY order_id
+) t;
