@@ -256,3 +256,16 @@ FROM (
     FROM order_items
     GROUP BY order_id
 ) t;
+
+--Customers with highest spending
+SELECT
+    c.customer_unique_id,
+    ROUND(SUM(oi.price),2) AS total_spent 
+FROM customers c
+JOIN orders o 
+    ON c.customer_id = o.customer_id 
+JOIN order_items oi 
+    ON o.order_id = oi.order_id 
+GROUP BY c.customer_unique_id 
+ORDER BY total_spent DESC 
+LIMIT 20;
